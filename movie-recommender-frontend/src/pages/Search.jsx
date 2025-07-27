@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import SearchForm from '../components/SearchForm';
 import MovieCard from '../components/MovieCard';
-import API from '../api';
+import fetchByTitle from '../api';
+
+
+
 
 const Search = () => {
   const [results, setResults] = useState([]);
@@ -11,14 +14,14 @@ const Search = () => {
       let res;
 
       if (type === "title") {
-        res = await API.get(`/recommend/title/${value}`);
+        res = await fetchByTitle(value); // ✅ No .get
       } else if (type === "genres") {
-        res = await API.get(`/recommend/genres/${value[0]}/${value[1]}`);
+        res = await fetch(`${BASE_URL}/recommend/genres/${value[0]}/${value[1]}`).then(r => r.json());
       } else if (type === "cluster") {
-        res = await API.get(`/recommend/cluster/${value}`);
+        res = await fetch(`${BASE_URL}/recommend/cluster/${value}`).then(r => r.json());
       }
 
-      setResults(res.data);
+      setResults(res);
     } catch (err) {
       console.error(err);
       alert("❌ Something went wrong. Try again.");
