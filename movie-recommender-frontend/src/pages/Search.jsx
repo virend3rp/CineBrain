@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import SearchForm from '../components/SearchForm';
 import MovieCard from '../components/MovieCard';
-import fetchByTitle from '../api';
+import axios from 'axios';
 
-
-
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:10000";
 
 const Search = () => {
   const [results, setResults] = useState([]);
@@ -14,14 +13,14 @@ const Search = () => {
       let res;
 
       if (type === "title") {
-        res = await fetchByTitle(value); // ✅ No .get
+        res = await axios.get(`${BASE_URL}/recommend/title/${value}`);
       } else if (type === "genres") {
-        res = await fetch(`${BASE_URL}/recommend/genres/${value[0]}/${value[1]}`).then(r => r.json());
+        res = await axios.get(`${BASE_URL}/recommend/genres/${value[0]}/${value[1]}`);
       } else if (type === "cluster") {
-        res = await fetch(`${BASE_URL}/recommend/cluster/${value}`).then(r => r.json());
+        res = await axios.get(`${BASE_URL}/recommend/cluster/${value}`);
       }
 
-      setResults(res);
+      setResults(res.data);
     } catch (err) {
       console.error(err);
       alert("❌ Something went wrong. Try again.");
