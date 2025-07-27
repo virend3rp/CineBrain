@@ -1,4 +1,4 @@
-# 🎬 CineBrain - AI-Powered Movie Recommendation System
+# 🎬 CineBrain - ML-Powered Movie Recommendation System
 
 Welcome to **CineBrain**, your intelligent movie companion that helps you find the perfect movie using advanced recommendation techniques!
 
